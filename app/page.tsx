@@ -1,95 +1,61 @@
+'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
+import { tt } from '@/app/utils/i18n/i18n'
+import BackgroundDynamic from '@/app/components/BackgroundDynamic'
+import InpageJumpLink from '@/app/components/InpageJumpLink'
 
 export default function Home() {
+  const inpageJumpLinks = [
+    {
+      href: '#about',
+      title: tt('about'),
+    },
+    {
+      href: '#experience',
+      title: tt('experience'),
+    },
+    {
+      href: '#education',
+      title: tt('education'),
+    },
+  ]
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+      <BackgroundDynamic />
+      <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0">
+        <div className="lg:flex lg:justify-between lg:gap-4">
+          <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
+                <a href={'/'}>Jacques Nguyen</a>
+              </h1>
+              <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
+                {tt('jobTitle')}
+              </h2>
+              <p className="mt-4 max-w-xs leading-normal">{tt('leading')}</p>
+              <nav
+                className="nav hidden lg:block"
+                aria-label="In-page jump links"
+              >
+                <ul className="mt-16 w-max">
+                  {inpageJumpLinks.map(item => {
+                    return (
+                      <InpageJumpLink
+                        key={item.href}
+                        href={item.href}
+                        title={item.title}
+                      />
+                    )
+                  })}
+                </ul>
+              </nav>
+            </div>
+          </header>
+          <main className={styles.main}></main>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </>
   )
 }
