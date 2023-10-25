@@ -4,6 +4,7 @@ import styles from './page.module.css'
 import { tt } from '@/app/utils/i18n/i18n'
 import BackgroundDynamic from '@/app/components/BackgroundDynamic'
 import InpageJumpLink from '@/app/components/InpageJumpLink'
+import { useEffect } from 'react'
 
 export default function Home() {
   const inpageJumpLinks = [
@@ -20,6 +21,39 @@ export default function Home() {
       title: tt('education'),
     },
   ]
+
+  useEffect(() => {
+    function isElementInOneThirdTop() {
+      const element = document.getElementById('about')
+
+      if (element) {
+        const elementRect = element.getBoundingClientRect()
+        const elementTop = elementRect.top
+        const viewportHeight =
+          window.innerHeight || document.documentElement.clientHeight
+        const threshold = viewportHeight / 3
+
+        return elementTop <= threshold
+      } else {
+        return false
+      }
+    }
+
+    function handleScroll() {
+      console.log(isElementInOneThirdTop())
+    }
+
+    // Add a scroll event listener to check the element's position on scroll
+    window.addEventListener('scroll', handleScroll)
+
+    // Initial check when the component mounts
+    console.log(isElementInOneThirdTop())
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <>
@@ -53,7 +87,15 @@ export default function Home() {
               </nav>
             </div>
           </header>
-          <main className={styles.main}></main>
+          <main className={'pt-24 lg:w-1/2 lg:py-24'} id={'content'}>
+            <section
+              id="about"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              aria-label="About me"
+            >
+              <p>{tt('aboutContent')}</p>
+            </section>
+          </main>
         </div>
       </div>
     </>
